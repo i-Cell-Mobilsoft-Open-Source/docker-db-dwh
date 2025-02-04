@@ -1,0 +1,24 @@
+:toc: left
+:toclevels: 4
+:sectnums:
+:imagesdir: /baseimages/docker-db-dwh/{release_version}/generated/pic
+
+= DB-DWH docker image repository
+
+The parts of the project can be divided into several parts, complementing each other.
+Basically, there are 2 groups of images:
+
+* *parent (base image)* - these are the docker images
+that are used as base images for the target products.
+They can only contain the absolutely necessary functionality and content.
+* *builder* - they are used to carry content, they
+should never be used for base image.
+Its function is in the multi-stage dockerfile,
+where it is used as driver storage for example.
+
+== /dockerfile
+Detailed description about the docker images.
+
+include::base-images/base-images.adoc[leveloffset=+2]
+
+include::release-notes.adoc[leveloffset=+1]

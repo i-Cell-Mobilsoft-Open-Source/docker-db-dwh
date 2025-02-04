@@ -1,0 +1,10 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- The "install_partman_schema" file creates partman schema in the project DB and runs custom modifications and objects there -->
+    <include file="scripts/install_partman_schema.sql" relativeToChangelogFile="true"/> 
+    <include file="changelog-00.01.00.xml" relativeToChangelogFile="true"/>
+    <include file="liquibase-code-sources.xml" relativeToChangelogFile="true" />
+
+</databaseChangeLog>

@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  liquibase-release:
+    build:
+      context: .
+      dockerfile: dockerfile/liquibase/Dockerfile
+      args:
+        BASE_IMAGE: $DOCKER_IMAGE_JAVA11JRE
+        LIQUIBASE_VERSION: $LIQUIBASE_VERSION
+        # These are for embedding ojdbc into central Liquibase image
+        ARTIFACT_DOWNLOADER_IMAGE: $DOCKER_IMAGE_ARTIFACT_DOWNLOADER
+        POM_OJDBC_GROUP_ID: $ORACLE_OJDBC10_POM_GROUP_ID
+        POM_OJDBC_ARTIFACT_ID: $ORACLE_OJDBC10_ARTIFACT_ID
+        POM_OJDBC_VERSION: $ORACLE_OJDBC10_VERSION
+        POM_OJDBC_EXTENSION: $ORACLE_OJDBC10_EXTENSION
+        POM_ORAI18N_GROUP_ID: $ORACLE_ORAI18N_POM_GROUP_ID
+        POM_ORAI18N_ARTIFACT_ID: $ORACLE_ORAI18N_ARTIFACT_ID
+        POM_ORAI18N_VERSION: $ORACLE_ORAI18N_VERSION
+        POM_ORAI18N_EXTENSION: $ORACLE_ORAI18N_EXTENSION
+        # --
+    image: $DOCKER_IMAGE_LIQUIBASE
+
+  postgres-release_148:
+    build:
+      context: .
+      dockerfile: dockerfile/postgres_14/Dockerfile
+      args:
+        BASE_IMAGE: $POSTGRES_BASE_IMAGE_148
+    image: $DOCKER_IMAGE_POSTGRES_148
+
+  postgres-release_163:
+    build:
+      context: .
+      dockerfile: dockerfile/postgres_16/Dockerfile
+      args:
+        BASE_IMAGE: $POSTGRES_BASE_IMAGE_163
+    image: $DOCKER_IMAGE_POSTGRES_163
+
+  pg_tools-release:
+    build:
+      context: .
+      dockerfile: dockerfile/pg_tools/Dockerfile
+      args:
+        LIQUIBASE_BASE_IMAGE: $DOCKER_IMAGE_LIQUIBASE
+        LIQUIBASE_INSTALL_DIR: 'dockerfile/pg_tools/liquibase'
+        LIQUIBASE_PROPERTIES: 'dockerfile/pg_tools/etc/release'
+    image: $DOCKER_IMAGE_PG_TOOLS
+    depends_on:
+      liquibase-release:
+        condition: service_completed_successfully

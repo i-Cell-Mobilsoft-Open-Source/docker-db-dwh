@@ -1,0 +1,15 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+  <changeSet id="partman-procedures" author="bertalan.pasztor" runOnChange="true" >
+    <comment>partman/procedures install</comment>
+    <sqlFile path="methods/partition_data_proc.sql" relativeToChangelogFile="true" splitStatements="false"/>
+		<sqlFile path="methods/reapply_constraints_proc.sql" relativeToChangelogFile="true" splitStatements="false"/>
+		<sqlFile path="methods/run_analyze.sql" relativeToChangelogFile="true" splitStatements="false"/>
+		<sqlFile path="methods/run_maintenance_proc.sql" relativeToChangelogFile="true" splitStatements="false"/>
+		<sqlFile path="methods/undo_partition_proc.sql" relativeToChangelogFile="true" splitStatements="false"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,52 @@
+= Release notes
+
+== v0.1.0
+* New image:
+** icellmobilsoft/db-dwh/liquibase - Based on liquibase 4.15.
+
+== v0.2.0
+* New image:
+** icellmobilsoft/db-dwh/liquibase-bigquery - Not available.
+
+== v0.3.0
+* New image:
+** icellmobilsoft/db-dwh/airflow - Not available.
+
+== v0.4.0
+* New image:
+** icellmobilsoft/db-dwh/liquibase-bigquery-gc-cli - Not available.
+
+== v0.5.0
+* New image:
+** icellmobilsoft/db-dwh/postgres - A Postgresql 14 image with Partition manager and a Cron scheduler.
+* liquibase upgrade 4.15 -> 4.21
+* ENV versioning moved to .env file
+
+== v0.6.0
+* INSTALL_STEPs are handled dinamically and extended to 99
+
+== v0.7.0
+* OJDBC*.jar files are installed in the Liquibase image
+
+== v0.8.0
+* In dockerfile/liquibase/bash/auto.install.sh file,
+the logic of INSTALL_PASSWORD_S* 'override' is now fixed.
+* Multiplatform image build
+
+== v0.9.0
+* postgresql-14-partman package version fixing to `5.0.0-1.pgdg110+1`, and postgresql-14-cron package version fixing to `1.6.2-1.pgdg110+1`.
+
+[IMPORTANT]
+====
+Running the 5.0.0 partman extension does not create the `custom_time_partitions` table in the partman schema anymore, should be considered when running
+common liquibase commands.
+====
+* This error is fixed below:
+* New image:
+** icellmobilsoft/db-dwh/pg_tools - contains the fixed pg_partman and handles the starting of pg_cron scheduler.
+* partman is removed from the postgres image and only contains the CRON scheduler
+* this pg_tools should be used in every future projects, where partitioning is required!
+
+== v0.10.0
+* New open source dwh_ddl_change_tracker - Not available
+

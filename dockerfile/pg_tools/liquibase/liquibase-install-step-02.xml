@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- This partman install should be used in a DB repository where Postgres DB partitioning is requiered -->
+    <!-- The pg_partam extension should install into the project schema, and NOT into default Postgres DB -->
+    <!-- These will be called in the project's step-02 -->
+    <include file="common/install-parameters.xml" relativeToChangelogFile="true"/>
+    <include file="partman/liquibase-pg_partman.xml" relativeToChangelogFile="true"/>
+ 
+    
+</databaseChangeLog>
