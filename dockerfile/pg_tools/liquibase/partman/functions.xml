@@ -1,0 +1,46 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+  <changeSet id="partman-functions" author="bertalan.pasztor" runOnChange="true" >
+    <comment>partman/functions install</comment>
+    <sqlFile path="methods/apply_cluster.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/apply_constraints.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/apply_foreign_keys.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/apply_privileges.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/apply_publications.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/autovacuum_off.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/autovacuum_reset.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/check_control_type.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/check_default.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/check_name_length.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/check_subpartition_limits.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/check_subpart_sameconfig.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_function_id.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_function_time.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_parent.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_partition_id.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_partition_time.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_sub_parent.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/create_trigger.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/drop_constraints.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/drop_partition_column.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/drop_partition_id.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/drop_partition_time.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/dump_partition_table_definition.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/inherit_template_properties.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/insert_logs.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/partition_data_id.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/partition_data_time.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/partition_gap_fill.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/reapply_privileges.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/run_maintenance.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/show_partitions.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/show_partition_info.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/show_partition_name.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/stop_sub_partition.sql" relativeToChangelogFile="true" splitStatements="false"/>
+	<sqlFile path="methods/undo_partition.sql" relativeToChangelogFile="true" splitStatements="false"/>
+  </changeSet>
+
+</databaseChangeLog>

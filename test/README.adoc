@@ -1,0 +1,65 @@
+= Test
+
+Testing uses the https://github.com/bats-core/bats-core[BATS] program,
+documentation available at https://bats-core.readthedocs.io/en/stable/index.html.
+
+Since this method tests docker commands, manual downloading is required.
+
+.Downloading Test Bats Program
+[source,bash]
+----
+git clone git@github.com:bats-core/bats-core.git
+----
+
+Tests are implemented according to https://bats-core.readthedocs.io/en/stable/writing-tests.html[writing-tests.html].
+
+[NOTE]
+====
+Version https://github.com/bats-core/bats-core/tree/v1.9.0[`Bats 1.9.0`] was used at the time of writing this.
+====
+
+.Running tests
+[source,bash]
+----
+cd <PROJECT_PATH>/docker-db-dwh
+
+# step-by-step
+<BATHS_HOME>/bin/bats /test/liquibase/pure-liquibase.bats
+<BATHS_HOME>/bin/bats /test/liquibase/auto-install.bats
+<BATHS_HOME>/bin/bats /test/liquibase/before-liquibase.bats
+<BATHS_HOME>/bin/bats /test/liquibase/pure-liquibase-postgres.bats
+<BATHS_HOME>/bin/bats /test/liquibase/auto-install-postgres.bats
+
+# all-in-one
+<BATHS_HOME>/bin/bats \
+  test/liquibase/pure-liquibase.bats \
+  test/liquibase/auto-install.bats \
+  test/liquibase/before-liquibase.bats \
+  test/liquibase/pure-liquibase-postgres.bats \
+  test/liquibase/auto-install-postgres.bats
+----
+
+.Sample output
+[source,bash]
+----
+bash test/run.tests.sh
+ ✓ AUTO_INSTALL without defaults-step-01.properties file
+ ✓ AUTO_INSTALL with defaults
+ ✓ AUTO_INSTALL with INSTALL_URL env
+ ✓ AUTO_INSTALL with INSTALL_URL and INSTALL_URL_S1 env
+ ✓ AUTO_INSTALL with INSTALL_URL_S1 env
+ ✓ AUTO_INSTALL with URL env
+ ✓ AUTO_INSTALL with URL, INSTALL_URL and INSTALL_URL_S1 env
+ ✓ AUTO_INSTALL with URL, INSTALL_URL, INSTALL_URL_S1 and LIQUIBASE_COMMAND_URL env
+ ✓ AUTO_INSTALL [ oracle ] with INSTALL_URL, INSTALL_USERNAME_S1, INSTALL_PASSWORD_S1 env
+ ✓ AUTO_INSTALL [ oracle ] with INSTALL_URL, INSTALL_USERNAME_S2, INSTALL_PASSWORD_S2, MULTI_STEP env
+ ✓ AUTO_INSTALL on postgres with defaults
+ ✓ AUTO_INSTALL STEP_1 only on postgres with defaults
+ ✓ AUTO_INSTALL STEP_2 only on postgres with defaults
+ ✓ AUTO_INSTALL with mounted before-liquibase.sh
+ ✓ Liquibase without command
+ ✓ Liquibase with not parseable changelog
+ ✓ Liquibase with changelog
+
+17 tests, 0 failures
+----

@@ -1,0 +1,203 @@
+ifndef::imagesdir[:imagesdir: ../pic]
+
+= liquibase
+
+* Image: 
+** `icellmobilsoft/db-dwh/liquibase`
+* Base: `icellmobilsoft/java11jre`
+* Goal: to use a central liquibase in every project
+* Extra ENVs:
+** *$LIQUIBASE_HOME* - liquibase main directory
+** *$DOCKER_LIQUIBASE_CHANGELOG* - liquibase changelog main directory
+** *$DOCKER_LIQUIBASE_CLASSPATH* - liquibase classpath main directory
+* Installed packages:
+** *liquibase*
+** *OJDBC10.JAR files* in /lib
+
+This image extends the java11jre image with a liquibase install.
+With this, it's possible to run PostgreSQL or Oracle database changelog scripts and
+install any required objects.
+
+image::Liquibase-auto-install-dockerimage.drawio.png[title="Dockerimage"]
+
+.Use cases
+. Original liquibase image, but user and directory structure is modified to iCell standards.
+The usage is same as the original https://docs.liquibase.com/start/home.html[Liquibase docs].
+The ENV parameters help achieving a clear structure.
+. Installer image - As specified by internal iCellmobilsoft standards,
+allows the running of multiple liquibase commands in a specified order.
+Developers can make automated installers without complicated arguments.
+
+== Installer image
+The concept of an installation is different from a simple Liquibase run in that it consists of several Liquibase runs and steps.
+The steps may have common parameters, but they may also have different parameters.
+We want to standardize this by using this installer image.
+
+.Installer image's goal
+* To be all-in-one - as in, contain anything required for the install (default parameters, changelog files, versioning...),
+without outside requirements.
+* Allow the usage of custom ENV paramaters, that is used by the Liquibase changesets (e.g.: schema names, prefixes, etc...)
+* If the install consists of multiple steps, then they can be parameterized separately (properties file and ENVs)
+* Minimum configuration at runtime (e.g.: url, username, password)
+
+Currently a maximum of 99 steps can be used:
+
+* *STEP_1* - to be used on a fresh, clean DB,with 'admin/root'.
+For the purposes of:
+** Schema initialization
+** Creation of DB users and privileges
+** Setup and configure DB extensions
+
+* *STEP_2-99* - typically used for commands to be run by a user,
+who was created in STEP_1
+For example:
+** table creation
+** index, constraint management
+** insert, update, delete data
+
+
+image::Liquibase-auto-install-script.drawio.png[title="Installation process"]
+
+To ensure uniform use, it was necessary to introduce some restrictions:
+
+* *It's not possible to use Liquibase command line parameters*.
+If any other parameter is required then use https://docs.liquibase.com/parameters/home.html[Liquibase ENV]
+* Some of the Liquibase ENV parameters are ignored,
+and are listed in the table below.
+Every other ENV parameter works normally.
+More about this:
+https://docs.liquibase.com/concepts/connections/liquibase-environment-variables.html[Liquibase command precedence - Configuration Hierarchy].
+
+[[Liquibase_image_installer_settings]]
+=== Installer image settings
+. `$DOCKER_LIQUIBASE_CHANGELOG` - the directory to be used for Liquibase changelog scripts
+. `$LIQUIBASE_HOME/$AUTO_INSTALL/defaults-step-01.properties` and
+`$LIQUIBASE_HOME/$AUTO_INSTALL/defaults-step-02.properties` properties files,
+for the default parameters of STEP_1 and STEP_2.
+These parameters can be overridden by docker ENV parameters at installation.
+
+.Control parameters
+[options="header"]
+|===
+|Docker ENV   |Set of Values   |Function
+//-------------------------------
+|*$AUTO_INSTALL* |custom (postgres, oracle) <*1> |Docker image installation activation
+|*$INSTALL_STEP* |STEP_1 , STEP_2, ... STEP_99 <*2> |Which step to run
+|===
+<1> Its value depends on the directory structure in which the `defaults-step-*.properties` files are placed.
+For example the default is `$LIQUIBASE_HOME/*postgres*/defaults-step-01.properties` and so `postgres`
+<2> Only required for running individual steps.
+Currently, a maximum of 99 steps are possible, by default every step is run after the other.
+
+image::Liquibase-auto-install-param.drawio.png[title="Parameter handling"]
+
+[[Liquibase_image_installer_settings_parameters]]
+.Runtime parmeters
+[options="header"]
+|===
+|Docker ENV   |Step properties file   |Disabled Liquibase parameter   |Default value
+//-------------------------------
+|INSTALL_URL +
+or +
+INSTALL_URL_S1 +
+INSTALL_URL_S2         |URL           |LIQUIBASE_COMMAND_URL            |jdbc:postgresql://localhost:5432/postgres
+|INSTALL_USERNAME +
+or +
+INSTALL_USERNAME_S1 +
+INSTALL_USERNAME_S2    |USERNAME      |LIQUIBASE_COMMAND_USERNAME       |postgres
+|INSTALL_PASSWORD +
+or +
+INSTALL_PASSWORD_S1 +
+INSTALL_PASSWORD_S2    |PASSWORD      |LIQUIBASE_COMMAND_PASSWORD       |postgres
+|INSTALL_CHANGELOGFILE +
+or +
+INSTALL_CHANGELOGFILE_S1 +
+INSTALL_CHANGELOGFILE_S2 |CHANGELOGFILE |LIQUIBASE_COMMAND_CHANGELOG_FILE |liquibase-install-default.xml
+|INSTALL_CONTEXTS +
+or +
+INSTALL_CONTEXTS_S1 +
+INSTALL_CONTEXTS_S2    |CONTEXTS      |LIQUIBASE_COMMAND_CONTEXTS       | 
+|INSTALL_LABELS +
+or +
+INSTALL_LABELS_S1 +
+INSTALL_LABELS_S2      |LABELS        |LIQUIBASE_COMMAND_LABELS         | 
+|===
+These runtime parameters are used in related STEP_*
+The value precedence of the parameters is as follows (higher wins):
+
+4.`INSTALL_URL_S1` / `INSTALL_URL_S2` (ENV parameter) +
+3.`INSTALL_URL` (ENV pareméter) +
+2.`URL` (`defaults-step-01.properties` / `defaults-step-02.properties` parameter) +
+1.default (`jdbc:postgresql://localhost:5432/postgres`) +
+0.`LIQUIBASE_COMMAND_URL` ignored
+
+.Example
+[source,bash]
+----
+docker run --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e URL=jdbc:postgresql://url:5432/postgres \
+  -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
+  -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
+  -e LIQUIBASE_COMMAND_URL=jdbc:postgresql://liquibase-command-url-s1:5432/postgres \
+  icellmobilsoft/db-dwh/liquibase:$VERSION
+
+# Liquibase install
+# STEP_1: `jdbc:postgresql://install-url-s1:5432/postgres`
+# STEP_2: `jdbc:postgresql://install-url:5432/postgres`
+# URLs are going to be used.
+----
+
+== Liquibase usage samples
+
+=== Classic Liquibase
+It can be used as usual as the original Liquibase,
+with properties, command line or ENV parameters.
+
+.Changelog attached at runtime
+[source,bash]
+----
+docker run --rm \
+  -v ./test/liquibase/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-changelog.xml \
+  dockerhub.icellmobilsoft.hu/db-dwh/liquibase:$VERSION \
+  update \
+    --changelog-file=liquibase-defaults.properties \
+    --url='jdbc:postgresql://localhost:5432/postgres' \
+    --username=postgres \
+    --password=postgres
+----
+
+=== Liquibase installer image
+
+.Sources are attached runtime, defaults are in the properties files
+[source,bash]
+----
+docker run --rm \
+  -v ./test/liquibase/defaults-step-01.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
+  -v ./test/liquibase/defaults-step-02.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-02.properties \
+  -v ./test/liquibase:/home/icellmobilsoft/liquibase/changelog \
+  -e AUTO_INSTALL=postgresql \
+  icellmobilsoft/db-dwh/liquibase:$VERSION
+----
+<1> Here, we assume that in `defaults-step-01.properties` and `defaults-step-02.properties`
+files, the correct STEP_1 and STEP_2 values for `CHANGELOGFILE` are configured.
+Other settings <<Liquibase_image_installer_settings_parameters>>.
+
+.Sources are attached runtime, controlled by ENV variables
+[source,bash]
+----
+docker run --rm \
+  -v ./test/liquibase/defaults-step-01.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
+  -v ./test/liquibase/defaults-step-02.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-02.properties \
+  -v ./test/liquibase:/home/icellmobilsoft/liquibase/changelog \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
+  -e INSTALL_USERNAME_S1=pgadmin \
+  -e INSTALL_PASSWORD_S1=pgpass \
+  -e INSTALL_USERNAME_S2=schemauser \
+  -e INSTALL_PASSWORD_S2=schemapass \
+  dockerhub.icellmobilsoft.hu/db-dwh/liquibase:$VERSION
+----
+<1> Here, we assume that in `defaults-step-01.properties` and `defaults-step-02.properties`
+files, the correct STEP_1 and STEP_2 values for `CHANGELOGFILE` are configured.
+Other settings <<Liquibase_image_installer_settings_parameters>>.

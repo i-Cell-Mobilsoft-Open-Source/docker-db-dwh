@@ -1,0 +1,38 @@
+:toc: left
+:toclevels: 4
+:sectnums:
+
+= db-dwh dockerimages
+
+This repository contains the base docker images used by data warehouse and database tasks, so that projects and their builds work on the same basis.
+
+The parts of the project can be divided into several parts, complementing each other. +
+Basically, there are 2 groups of images:
+
+* *parent (base image)* - these are the docker images
+that are used as base images for the target products.
+They can only contain the absolutely necessary functionality and content.
+* *builder* - they are used to carry content, they
+should never be used for base image.
+Its function is in the multi-stage dockerfile,
+where it is used as driver storage for example.
+
+Builder type images are not in use currently, because we don't use multi-sage dockerfiles.
+
+== Project structure
+
+=== /dockerfile
+Collection of dockerfiles.
+Detailed description about the docker images are available at https://common.pages.icellmobilsoft.hu/baseimages/docker-db-dwh/[Docker Base Images].
+
+== Development
+To start a local database from an image:
+
+[source,bash]
+----
+docker volume create postgredb-data
+ 
+docker run -d -v postgredb-data:/data/db -e POSTGRES_PASSWORD=postgres --name postgres -p 5432:5432 icellmobilsoft/db-dwh/postgres:0.10.0
+ 
+#Here, the version number at the and of the command can be replaced to the lastest (currently it's 0.10.0)
+----
