@@ -3,8 +3,6 @@ ARG LIQUIBASE_VERSION
 ARG BASE_IMAGE
 ################################################################################
 # Stage 1: Download ojdbc*.jar
-#   ojdbc download based on: https://gitlab.k8s.icellmobilsoft.hu/common/baseimages/docker-wildfly/-/blob/master/dockerfile/wildfly/oracle-jdbc/Dockerfile#L56
-#   Jira: https://icellmobilsoft-int.atlassian.net/browse/DCKDBDWH-8
 ################################################################################
 FROM $ARTIFACT_DOWNLOADER_IMAGE as download
 
@@ -40,7 +38,7 @@ RUN $HOME/script/maven-search-download.sh
 ################################################################################
 # Stage 2: Liquibase
 ################################################################################
-FROM dockerhub-dockerio.icellmobilsoft.hu/liquibase/liquibase:$LIQUIBASE_VERSION as liqui
+FROM liquibase/liquibase:$LIQUIBASE_VERSION as liqui
 
 ################################################################################
 # Stage 3: Base image
