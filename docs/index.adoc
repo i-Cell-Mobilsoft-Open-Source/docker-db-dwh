@@ -1,7 +1,7 @@
 :toc: left
 :toclevels: 4
 :sectnums:
-:imagesdir: /baseimages/docker-db-dwh/{release_version}/generated/pic
+:imagesdir: /docker-db-dwh/{release_version}/generated/pic
 
 = DB-DWH docker image repository
 

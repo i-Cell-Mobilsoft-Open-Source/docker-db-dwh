@@ -23,7 +23,7 @@ Builder type images are not in use currently, because we don't use multi-sage do
 
 === /dockerfile
 Collection of dockerfiles.
-Detailed description about the docker images are available at https://common.pages.icellmobilsoft.hu/baseimages/docker-db-dwh/[Docker Base Images].
+Detailed description about the docker images are available at https://i-cell-mobilsoft-open-source.github.io/docker-db-dwh/[Docker Base Images].
 
 == Development
 To start a local database from an image:
