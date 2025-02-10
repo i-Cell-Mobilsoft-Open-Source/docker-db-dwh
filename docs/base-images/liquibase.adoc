@@ -3,7 +3,7 @@ ifndef::imagesdir[:imagesdir: ../pic]
 = liquibase
 
 * Image: 
-** `icellmobilsoft/db-dwh/liquibase`
+** `icellmobilsoft/db-base-liquibase`
 * Base: `icellmobilsoft/java11jre`
 * Goal: to use a central liquibase in every project
 * Extra ENVs:
@@ -140,7 +140,7 @@ docker run --rm \
   -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
   -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
   -e LIQUIBASE_COMMAND_URL=jdbc:postgresql://liquibase-command-url-s1:5432/postgres \
-  icellmobilsoft/db-dwh/liquibase:$VERSION
+  icellmobilsoft/db-base-liquibase:$VERSION
 
 # Liquibase install
 # STEP_1: `jdbc:postgresql://install-url-s1:5432/postgres`
@@ -159,7 +159,7 @@ with properties, command line or ENV parameters.
 ----
 docker run --rm \
   -v ./test/liquibase/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-changelog.xml \
-  dockerhub.icellmobilsoft.hu/db-dwh/liquibase:$VERSION \
+  dockerhub.icellmobilsoft.hu/db-base-liquibase:$VERSION \
   update \
     --changelog-file=liquibase-defaults.properties \
     --url='jdbc:postgresql://localhost:5432/postgres' \
@@ -177,7 +177,7 @@ docker run --rm \
   -v ./test/liquibase/defaults-step-02.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-02.properties \
   -v ./test/liquibase:/home/icellmobilsoft/liquibase/changelog \
   -e AUTO_INSTALL=postgresql \
-  icellmobilsoft/db-dwh/liquibase:$VERSION
+  icellmobilsoft/db-base-liquibase:$VERSION
 ----
 <1> Here, we assume that in `defaults-step-01.properties` and `defaults-step-02.properties`
 files, the correct STEP_1 and STEP_2 values for `CHANGELOGFILE` are configured.
@@ -196,7 +196,7 @@ docker run --rm \
   -e INSTALL_PASSWORD_S1=pgpass \
   -e INSTALL_USERNAME_S2=schemauser \
   -e INSTALL_PASSWORD_S2=schemapass \
-  dockerhub.icellmobilsoft.hu/db-dwh/liquibase:$VERSION
+  dockerhub.icellmobilsoft.hu/db-base-liquibase:$VERSION
 ----
 <1> Here, we assume that in `defaults-step-01.properties` and `defaults-step-02.properties`
 files, the correct STEP_1 and STEP_2 values for `CHANGELOGFILE` are configured.

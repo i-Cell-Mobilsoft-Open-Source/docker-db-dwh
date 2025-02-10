@@ -8,7 +8,7 @@ setup() {
     --name docker-db-dwh-postgres \
     -e POSTGRES_PASSWORD=postgres \
     -e POSTGRES_USER=postgres \
-   icellmobilsoft/db-dwh/postgres:$VERSION
+   icellmobilsoft/db-base-postgres_148:$VERSION
 }
 
 teardown() {
@@ -22,7 +22,7 @@ teardown() {
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-02.properties \
     -v $TEST_LIQUIBASE/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-install-default.xml \
     -e AUTO_INSTALL=postgresql \
-   icellmobilsoft/db-dwh/liquibase:$VERSION
+   icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 0 [${status}]"
   [ "${status}" -eq 0 ]
@@ -61,7 +61,7 @@ Liquibase command 'update' was executed successfully."
     -v $TEST_LIQUIBASE/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-install-default.xml \
     -e AUTO_INSTALL=postgresql \
     -e INSTALL_STEP=STEP_1 \
-   icellmobilsoft/db-dwh/liquibase:$VERSION
+   icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 0 [${status}]"
   [ "${status}" -eq 0 ]
@@ -93,7 +93,7 @@ Liquibase command 'update' was executed successfully."
     -v $TEST_LIQUIBASE/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-install-default.xml \
     -e AUTO_INSTALL=postgresql \
     -e INSTALL_STEP=STEP_2 \
-   icellmobilsoft/db-dwh/liquibase:$VERSION
+   icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 0 [${status}]"
   [ "${status}" -eq 0 ]

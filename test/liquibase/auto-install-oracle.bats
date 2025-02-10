@@ -16,7 +16,7 @@ source .env
     -e INSTALL_USERNAME_S1=SYSTEM \
     -e INSTALL_PASSWORD_S1=KISCICA \
     -v $(pwd)/mocked.liquibase.run.sh:/home/icellmobilsoft/liquibase/bash/liquibase.run.sh \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 0 [${status}]"
   [ "${status}" -eq 0 ]
@@ -48,7 +48,7 @@ source .env
     -v $(pwd)/mocked.liquibase.run.sh:/home/icellmobilsoft/liquibase/bash/liquibase.run.sh \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-01.properties \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-02.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
   # set +x
   echo "expected status: 0 [${status}]"
   [ "${status}" -eq 0 ]

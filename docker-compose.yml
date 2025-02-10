@@ -21,6 +21,7 @@ services:
         # --
     image: $DOCKER_IMAGE_LIQUIBASE
 
+  # Postgres 14.8 version
   postgres-release_148:
     build:
       context: .
@@ -29,6 +30,7 @@ services:
         BASE_IMAGE: $POSTGRES_BASE_IMAGE_148
     image: $DOCKER_IMAGE_POSTGRES_148
 
+  # Postgres 16.8 version
   postgres-release_163:
     build:
       context: .

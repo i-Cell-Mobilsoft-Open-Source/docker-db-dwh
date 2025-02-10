@@ -3,7 +3,7 @@
 source .env
 
 @test "Liquibase without command" {
-  run docker run --rm icellmobilsoft/db-dwh/liquibase:$VERSION
+  run docker run --rm icellmobilsoft/db-base-liquibase:$VERSION
 
 #  echo ${status} >&3
 #  echo ${output} >&3

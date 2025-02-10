@@ -2,23 +2,23 @@
 
 == v0.1.0
 * New image:
-** icellmobilsoft/db-dwh/liquibase - Based on liquibase 4.15.
+** icellmobilsoft/db-base-liquibase - Based on liquibase 4.15.
 
 == v0.2.0
 * New image:
-** icellmobilsoft/db-dwh/liquibase-bigquery - Not available.
+** icellmobilsoft/db-base-liquibase-bigquery - Not available.
 
 == v0.3.0
 * New image:
-** icellmobilsoft/db-dwh/airflow - Not available.
+** icellmobilsoft/db-base-airflow - Not available.
 
 == v0.4.0
 * New image:
-** icellmobilsoft/db-dwh/liquibase-bigquery-gc-cli - Not available.
+** icellmobilsoft/db-base-liquibase-bigquery-gc-cli - Not available.
 
 == v0.5.0
 * New image:
-** icellmobilsoft/db-dwh/postgres - A Postgresql 14 image with Partition manager and a Cron scheduler.
+** icellmobilsoft/db-base-postgres - A Postgresql 14 image with Partition manager and a Cron scheduler.
 * liquibase upgrade 4.15 -> 4.21
 * ENV versioning moved to .env file
 
@@ -43,10 +43,14 @@ common liquibase commands.
 ====
 * This error is fixed below:
 * New image:
-** icellmobilsoft/db-dwh/pg_tools - contains the fixed pg_partman and handles the starting of pg_cron scheduler.
+** icellmobilsoft/db-base-pg_tools - contains the fixed pg_partman and handles the starting of pg_cron scheduler.
 * partman is removed from the postgres image and only contains the CRON scheduler
 * this pg_tools should be used in every future projects, where partitioning is required!
 
 == v0.10.0
 * New open source dwh_ddl_change_tracker - Not available
 
+== v1.0.0
+* Github release
+** icellmobilsoft/db-base-postgres renamed to icellmobilsoft/db-base-postgres_148
+** db-base-liquibase-bigquery,db-base-liquibase-bigquery-gc-cli, db-base-airflow images are removed
