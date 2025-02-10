@@ -32,7 +32,7 @@ To start a local database from an image:
 ----
 docker volume create postgredb-data
  
-docker run -d -v postgredb-data:/data/db -e POSTGRES_PASSWORD=postgres --name postgres -p 5432:5432 icellmobilsoft/db-dwh/postgres:0.10.0
+docker run -d -v postgredb-data:/data/db -e POSTGRES_PASSWORD=postgres --name postgres -p 5432:5432 icellmobilsoft/db-base-postgres_148:0.10.0
  
 #Here, the version number at the and of the command can be replaced to the lastest (currently it's 0.10.0)
 ----

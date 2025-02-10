@@ -8,7 +8,7 @@ setup() {
     --name docker-db-dwh-postgres \
     -e POSTGRES_PASSWORD=postgres \
     -e POSTGRES_USER=postgres \
-    icellmobilsoft/db-dwh/postgres:$VERSION
+    icellmobilsoft/db-base-postgres_148:$VERSION
 }
 
 teardown() {
@@ -19,7 +19,7 @@ teardown() {
   run \
     docker run --rm --network="host" \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/liquibase-defaults.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION \
+    icellmobilsoft/db-base-liquibase:$VERSION \
     update \
       --changelog-file=/home/icellmobilsoft/liquibase/postgresql/liquibase-defaults.properties \
       --url='jdbc:postgresql://localhost:5432/postgres' \
@@ -38,7 +38,7 @@ teardown() {
   run \
     docker run --rm --network="host" \
     -v $TEST_LIQUIBASE/liquibase-changelog.xml:/home/icellmobilsoft/liquibase/changelog/liquibase-changelog.xml \
-    icellmobilsoft/db-dwh/liquibase:$VERSION \
+    icellmobilsoft/db-base-liquibase:$VERSION \
     update \
       --changelog-file=liquibase-changelog.xml \
       --url='jdbc:postgresql://localhost:5432/postgres' \

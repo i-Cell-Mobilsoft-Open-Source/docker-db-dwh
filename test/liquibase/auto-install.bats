@@ -3,7 +3,7 @@
 source .env
 
 @test "AUTO_INSTALL without defaults-step-01.properties file" {
-  run docker run --rm -e AUTO_INSTALL=postgresql icellmobilsoft/db-dwh/liquibase:$VERSION
+  run docker run --rm -e AUTO_INSTALL=postgresql icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -24,7 +24,7 @@ INSTALL_LABELS="
     docker run --rm \
     -e AUTO_INSTALL=postgresql \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -46,7 +46,7 @@ INSTALL_LABELS="
     -e AUTO_INSTALL=postgresql \
     -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
     -v $TEST_LIQUIBASE//liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -64,7 +64,7 @@ INSTALL_LABELS="
     -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
     -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
     -v $TEST_LIQUIBASE//liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -81,7 +81,7 @@ INSTALL_LABELS="
     -e AUTO_INSTALL=postgresql \
     -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -98,7 +98,7 @@ INSTALL_LABELS="
     -e AUTO_INSTALL=postgresql \
     -e URL=jdbc:postgresql://url:5432/postgres \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -117,7 +117,7 @@ INSTALL_LABELS="
     -e INSTALL_URL=jdbc:postgresql://install-url:5432/postgres \
     -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]
@@ -137,7 +137,7 @@ INSTALL_LABELS="
     -e INSTALL_URL_S1=jdbc:postgresql://install-url-s1:5432/postgres \
     -e LIQUIBASE_COMMAND_URL=jdbc:postgresql://liquibase-command-url-s1:5432/postgres \
     -v $TEST_LIQUIBASE/liquibase-defaults.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties \
-    icellmobilsoft/db-dwh/liquibase:$VERSION
+    icellmobilsoft/db-base-liquibase:$VERSION
 
   echo "expected status: 1 [${status}]"
   [ "${status}" -eq 1 ]

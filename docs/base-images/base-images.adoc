@@ -5,17 +5,17 @@ include::liquibase.adoc[leveloffset=+1]
 = Postgres
 
 * Image: 
-** `icellmobilsoft/db-dwh/postgres`
+** `icellmobilsoft/db-base-postgres_148`
 * Base: `postgres:14.8-bullseye`
 * Goal: Postgresql DB setup with CRON scheduler
 * Installed packages:
-** *postgresql-14-cron (1.6.2-1)*
+** *postgresql-14-cron*
 
 = pg_tools
 
 * Image: 
-** `icellmobilsoft/db-dwh/pg_tools`
-* Base: `icellmobilsoft/db-dwh/liquibase`
+** `icellmobilsoft/db-base-pg_tools`
+* Base: `icellmobilsoft/db-base-liquibase`
 * Goal: Setup a fixed pg_partman partition manager and then start the pg_cron scheduler in the Postgres image
 * This image should be used in every project repository where a Postgres DB is used.
 ** Installing: To be used in Step2, after the creation of the projects schema, since it will be installed inside that
