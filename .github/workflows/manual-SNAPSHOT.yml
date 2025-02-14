@@ -93,7 +93,7 @@ jobs:
           push: true
           files: |
             docker-compose.yml
-          targets: postgres-release_148, postgres-release_163
+          targets: postgres-release_148
 
       - name: docker buildx bake "#3 - pg_tools"
         uses: docker/bake-action@v5
