@@ -58,6 +58,11 @@ jobs:
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
+      # Reset QEMU emulation for multi-architecture support and enable required platforms 
+      - name: Reset QEMU for Multi-Arch
+        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
         id: buildx
@@ -85,22 +90,22 @@ jobs:
             docker-compose.yml
           targets: liquibase-release
 
-      #- name: docker buildx bake "#2 - postgres"
-      #  uses: docker/bake-action@v5
-      #  with:
-      #    set: |
-      #      *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
-      #    push: true
-      #    files: |
-      #      docker-compose.yml
-      #    targets: postgres-release_148
+      - name: docker buildx bake "#2 - postgres"
+        uses: docker/bake-action@v5
+        with:
+          set: |
+            *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
+          push: true
+          files: |
+            docker-compose.yml
+          targets: postgres-release_148, postgres-release_163
 
-      #- name: docker buildx bake "#3 - pg_tools"
-      #  uses: docker/bake-action@v5
-      #  with:
-      #    set: |
-      #      *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
-      #    push: true
-      #    files: |
-      #      docker-compose.yml
-      #    targets: pg_tools-release
+      - name: docker buildx bake "#3 - pg_tools"
+        uses: docker/bake-action@v5
+        with:
+          set: |
+            *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
+          push: true
+          files: |
+            docker-compose.yml
+          targets: pg_tools-release
