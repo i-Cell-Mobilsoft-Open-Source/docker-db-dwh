@@ -61,6 +61,11 @@ jobs:
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
+      # Reset QEMU emulation for multi-architecture support and enable required platforms
+      - name: Reset QEMU for Multi-Arch
+        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
         id: buildx
