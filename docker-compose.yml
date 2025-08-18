@@ -30,7 +30,7 @@ services:
         BASE_IMAGE: $POSTGRES_BASE_IMAGE_148
     image: $DOCKER_IMAGE_POSTGRES_148
 
-  # Postgres 16.8 version
+  # Postgres 16.3 version
   postgres-release_163:
     build:
       context: .
@@ -38,6 +38,15 @@ services:
       args:
         BASE_IMAGE: $POSTGRES_BASE_IMAGE_163
     image: $DOCKER_IMAGE_POSTGRES_163
+
+  # Postgres 17.5 version
+  postgres-release_175:
+    build:
+      context: .
+      dockerfile: dockerfile/postgres_17/Dockerfile
+      args:
+        BASE_IMAGE: $POSTGRES_BASE_IMAGE_175
+    image: $DOCKER_IMAGE_POSTGRES_175
 
   pg_tools-release:
     build:
