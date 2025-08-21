@@ -29,12 +29,12 @@ Detailed description about the docker images are available at https://i-cell-mob
 Build all images from the repository's root directory
 [source,bash]
 ----
-docker compose --env-file .env-f ./docker-compose.yml build --no-cache
+docker compose --env-file .env -f ./docker-compose.yml build --no-cache
 ----
 To build only a specified image local testing from the repository's root directory:
 [source,bash]
 ----
-docker compose --env-file .env -f ./docker-compose.yml build --no-cache <image_name>
+docker compose --env -file .env -f ./docker-compose.yml build --no-cache <service_name>
 ----
 To start a local database from an image:
 
