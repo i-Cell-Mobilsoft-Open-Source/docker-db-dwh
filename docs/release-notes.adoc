@@ -56,5 +56,4 @@ common liquibase commands.
 ** db-base-liquibase-bigquery,db-base-liquibase-bigquery-gc-cli, db-base-airflow images are removed
 
 == v1.1.0
-* Github release
-** Postgresql 17.5 version added (POSTGRES_BASE_IMAGE_175)
+* Postgresql 17.5 version added (icellmobilsoft/db-base-postgres_175)
