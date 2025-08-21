@@ -54,3 +54,6 @@ common liquibase commands.
 * Github release
 ** icellmobilsoft/db-base-postgres renamed to icellmobilsoft/db-base-postgres_148
 ** db-base-liquibase-bigquery,db-base-liquibase-bigquery-gc-cli, db-base-airflow images are removed
+
+== v1.1.0
+* Postgresql 17.5 version added (icellmobilsoft/db-base-postgres_175)
