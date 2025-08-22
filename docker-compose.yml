@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   liquibase-release:
     build:
@@ -20,6 +18,26 @@ services:
         POM_ORAI18N_EXTENSION: $ORACLE_ORAI18N_EXTENSION
         # --
     image: $DOCKER_IMAGE_LIQUIBASE
+
+  liquibase-release_431:
+    build:
+      context: .
+      dockerfile: dockerfile/liquibase/Dockerfile
+      args:
+        BASE_IMAGE: $DOCKER_IMAGE_JAVA21JRE
+        LIQUIBASE_VERSION: 4.31
+        # These are for embedding ojdbc into central Liquibase image
+        ARTIFACT_DOWNLOADER_IMAGE: $DOCKER_IMAGE_ARTIFACT_DOWNLOADER
+        POM_OJDBC_GROUP_ID: $ORACLE_OJDBC10_POM_GROUP_ID
+        POM_OJDBC_ARTIFACT_ID: $ORACLE_OJDBC10_ARTIFACT_ID
+        POM_OJDBC_VERSION: $ORACLE_OJDBC10_VERSION
+        POM_OJDBC_EXTENSION: $ORACLE_OJDBC10_EXTENSION
+        POM_ORAI18N_GROUP_ID: $ORACLE_ORAI18N_POM_GROUP_ID
+        POM_ORAI18N_ARTIFACT_ID: $ORACLE_ORAI18N_ARTIFACT_ID
+        POM_ORAI18N_VERSION: $ORACLE_ORAI18N_VERSION
+        POM_ORAI18N_EXTENSION: $ORACLE_ORAI18N_EXTENSION
+        # --
+    image: $DOCKER_IMAGE_LIQUIBASE_431    
 
   # Postgres 14.8 version
   postgres-release_148:

@@ -4,7 +4,7 @@ ARG BASE_IMAGE
 ################################################################################
 # Stage 1: Download ojdbc*.jar
 ################################################################################
-FROM $ARTIFACT_DOWNLOADER_IMAGE as download
+FROM $ARTIFACT_DOWNLOADER_IMAGE AS download
 
 ARG POM_OJDBC_GROUP_ID
 ARG POM_OJDBC_ARTIFACT_ID
@@ -38,12 +38,12 @@ RUN $HOME/script/maven-search-download.sh
 ################################################################################
 # Stage 2: Liquibase
 ################################################################################
-FROM liquibase/liquibase:$LIQUIBASE_VERSION as liqui
+FROM liquibase/liquibase:$LIQUIBASE_VERSION AS liqui
 
 ################################################################################
 # Stage 3: Base image
 ################################################################################
-FROM ${BASE_IMAGE} as base
+FROM ${BASE_IMAGE} AS base
 
 ARG LIQUIBASE_HOME_DEFAULT=$HOME/liquibase
 ENV LIQUIBASE_HOME=$LIQUIBASE_HOME_DEFAULT

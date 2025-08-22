@@ -57,3 +57,4 @@ common liquibase commands.
 
 == v1.1.0
 * Postgresql 17.5 version added (icellmobilsoft/db-base-postgres_175)
+* Liquibase 4.31 version added for handling trino connections
