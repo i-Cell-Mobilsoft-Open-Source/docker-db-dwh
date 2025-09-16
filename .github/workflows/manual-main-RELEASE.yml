@@ -146,7 +146,7 @@ jobs:
           push: true
           files: |
             docker-compose.yml
-          targets: liquibase-release
+          targets: liquibase-release, liquibase-release_431
 
       - name: docker buildx bake "#2 - postgres"
         uses: docker/bake-action@v5
