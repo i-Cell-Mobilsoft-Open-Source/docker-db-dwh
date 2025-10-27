@@ -58,3 +58,4 @@ common liquibase commands.
 == v1.1.0
 * Postgresql 17.5 version added (icellmobilsoft/db-base-postgres_175)
 * Liquibase 4.31 version added (icellmobilsoft/db-base-liquibase_431)
+* Installed pg_jobmon 1.4.1 and pg_partman 5.0.1 extensions in the Postgresql 175 image.
