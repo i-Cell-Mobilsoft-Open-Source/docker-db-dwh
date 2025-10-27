@@ -16,4 +16,36 @@ COPY ./dockerfile/postgres_17/pg-cron.sh ./docker-entrypoint-initdb.d
 #set the execution access to pg-cron.sh so that the image runs this file
 RUN chmod +x ./docker-entrypoint-initdb.d/pg-cron.sh
 
+# Install pg_partman 5.0.1 (latest stable release)
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    postgresql-server-dev-17 \
+    && git clone https://github.com/pgpartman/pg_partman.git /tmp/pg_partman \
+    && cd /tmp/pg_partman \
+    && git checkout v5.0.1 \
+    && make \
+    && make install \
+    # Cleanup build files and tools
+    && apt-get remove -y git build-essential postgresql-server-dev-17 \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/pg_partman
+
+# Install pg_jobmon 1.4.1 (latest stable release)
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    postgresql-server-dev-17 \
+    && git clone https://github.com/omniti-labs/pg_jobmon.git /tmp/pg_jobmon \
+    && cd /tmp/pg_jobmon \
+    && git checkout v1.4.1 \  
+    && make \
+    && make install \
+    # Cleanup build files and tools
+    && apt-get remove -y git build-essential postgresql-server-dev-17 \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/pg_jobmon    
+
 USER postgres
