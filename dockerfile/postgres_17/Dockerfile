@@ -16,14 +16,14 @@ COPY ./dockerfile/postgres_17/pg-cron.sh ./docker-entrypoint-initdb.d
 #set the execution access to pg-cron.sh so that the image runs this file
 RUN chmod +x ./docker-entrypoint-initdb.d/pg-cron.sh
 
-# Install pg_partman 5.0.1 (latest stable release)
+# Install pg_partman 5.3.1 (latest stable release)
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     postgresql-server-dev-17 \
     && git clone https://github.com/pgpartman/pg_partman.git /tmp/pg_partman \
     && cd /tmp/pg_partman \
-    && git checkout v5.0.1 \
+    && git checkout v5.3.1 \
     && make \
     && make install \
     # Cleanup build files and tools
