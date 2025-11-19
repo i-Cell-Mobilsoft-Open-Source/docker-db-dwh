@@ -7,7 +7,12 @@ FROM ${BASE_IMAGE} AS pg_cron_base
 # the lsb-release package: is needed to determine the correct codename for the distribution.
 RUN apt-get update && apt-get install -y postgresql-17-cron \
     # Cleanup
-   && apt-get clean && rm -rf /var/lib/apt/lists/*
+   && apt-get clean && rm -rf /var/lib/apt/lists/* \
+   && echo "hu_HU.UTF-8 UTF-8" >> /etc/locale.gen && \
+   locale-gen   
+
+RUN localedef -i hu_HU -c -f UTF-8 -A /usr/share/locale/locale.alias hu_HU.UTF-8
+ENV LANG hu_HU.utf8
 
 #We need to copy the pg-cron.sh to docker-entrypoint-initdb.d folder b/c the image runs all file in this folder.
 #pg-cron.sh: it adds cron.database_name and shared_preload_libraries = 'pg_cron' to postgresql.conf
